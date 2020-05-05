@@ -1,0 +1,54 @@
+defmodule Rumbl.Accounts do
+
+  alias Rumbl.Repo
+  alias Rumbl.Accounts.User
+  @moduledoc """
+   The Accounts context
+  """
+
+  alias Rumbl.Accounts.User
+
+  def list_users do
+    Repo.all(User)
+    # [
+    #   %User{id: "1", name: "Jose", username: "josevalim"}, 
+    #   %User{id: "2", name: "Bruce", username: "redrapids"},
+    #   %User{id: "3", name: "Chris", username: "chrismccord"}
+    # ]
+  end
+
+  def get_user!(id) do
+    Repo.get!(User,id)
+  end
+
+  def get_user(id) do
+    Repo.get(User,id)
+  end
+
+  def get_user_by(params) do
+    Repo.get(User,params)
+  end
+
+  def change_user(%User{} = user) do
+    User.changeset(user, %{})
+  end
+
+  def create_user(attrs \\ %{}) do
+    %User{}
+    |> User.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def change_registration(%User{} = user, params) do
+    User.registration_changeset(user,params)
+  end
+
+  def register_user(attrs \\ %{}) do
+    %User{}
+    |> change_registration(attrs)
+    |> Repo.insert()
+  end
+end
+
+
+
